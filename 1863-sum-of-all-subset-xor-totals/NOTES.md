@@ -1,1 +1,1 @@
-I just need to find xor of all element and check in map
+​
