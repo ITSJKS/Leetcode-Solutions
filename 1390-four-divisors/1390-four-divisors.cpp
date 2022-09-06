@@ -15,6 +15,7 @@ public:
                 ans.push_back(i);
                 if(i*i!=n) ans.push_back(n/i);
             }
+            if(ans.size()>4) return -1;
             
         }
         // return ans;
