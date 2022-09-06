@@ -1,18 +1,14 @@
 class Solution {
-    vector <vector <int>> powerset;
+    vector <int> powerset;
     vector <int> subset;
 public:
     int subsetXORSum(vector<int>& nums) {
         backtrack(nums,0);
-        int sum = 0;
-        for(auto x:powerset){
-            sum += calc_xor(x);
-        }
-        return sum;
+        return accumulate(powerset.begin(),powerset.end(),0);
     }
     void backtrack(vector <int> &nums,int start){
         if(start == nums.size()){
-            powerset.push_back(subset);
+            powerset.push_back(calc_xor(subset));
             return;
         }
         subset.push_back(nums[start]);
