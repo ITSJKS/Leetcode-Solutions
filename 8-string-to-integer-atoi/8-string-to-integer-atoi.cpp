@@ -1,45 +1,33 @@
 class Solution {
 public:
+    bool isValid(char c){
+        return c>='0' && c<='9'; 
+    }
     int myAtoi(string s) {
+       int i = 0;
         bool neg = false;
-        int n = s.length();
-        long long ans = 0;
-        int j = 0;
-        while(s[j] == ' ') j++;
-        if(s[j]=='-'){
+       while(s[i]==' ') i++;
+        if(s[i] == '-'){
             neg = true;
-            j++;
+            i++;
         }
-        else if(s[j] == '+') j++;
-        bool infinite = false;
-            bool zeroes = true;
-            bool started = false;
-            for(int i = j;  i <n; i++){
-                if(zeroes && (s[i] == '0')){
-                    started  = true;
-                    continue;
+        else if(s[i] == '+'){
+            i++;
+        }
+        int ans = 0;
+        while(isValid(s[i]) && i < s.length()){
+        if(!neg){
+                if(ans>INT_MAX/10 || (ans==INT_MAX/10 && s[i]-'0'>=7)){
+                    return INT_MAX;
                 }
-                else if(s[i]>='0' && s[i] <='9'){
-                    zeroes = false;
-                    started = true;
-                    int prev = ans;
-                    ans =  ans*10 + (s[i]-'0');
-                    if(ans > INT_MAX){
-                        if(!neg)
-                        ans = INT_MAX;
-                        else{
-                            ans = INT_MIN;
-                        }
-                        infinite = true;
-                        break;
-                    }
-                    
-                }
-                else{
-                    break;
+            }else{
+                if(ans>INT_MAX/10 || (ans==INT_MAX/10 && s[i]-'0'>=8)){
+                    return INT_MIN;
                 }
             }
-        if(infinite) return ans;
+            ans = ans*10 + (s[i]-'0');
+            i++;
+        }
         return neg?-ans:ans;
     }
 };
