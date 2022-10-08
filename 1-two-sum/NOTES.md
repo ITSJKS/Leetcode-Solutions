@@ -1,0 +1,1 @@
+We just sort the array and do two pointer approach.
