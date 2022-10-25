@@ -10,16 +10,17 @@ class Solution
     //Function to find the maximum money the thief can get.
     int FindMaxSum(int arr[], int n)
     {
-        vector <int> dp(n+1,-1);
-        return find_ans(n-1,arr,dp);
-    }
-    int find_ans(int idx,int *arr,vector <int> &dp){
-        if(idx == 0) return arr[idx];
-        if(idx<0) return 0;
-        if(dp[idx]!=-1) return dp[idx];
-        int pick  = arr[idx] + find_ans(idx-2,arr,dp);
-        int notpick = 0 + find_ans(idx-1,arr,dp);
-        return dp[idx] = max(pick,notpick);
+        // Your code here
+        int prev = arr[0];
+        int prev2 = 0;
+        for(int i = 1; i <n; i++){
+            int take = arr[i] + prev2;
+            int nottake = prev;
+            int curi = max(take,nottake);
+            prev2 = prev;
+            prev = curi;
+        }
+        return prev;
     }
 };
 
