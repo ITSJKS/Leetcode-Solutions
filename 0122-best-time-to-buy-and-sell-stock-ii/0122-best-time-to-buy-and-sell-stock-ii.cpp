@@ -2,17 +2,14 @@ class Solution {
 public:
     int maxProfit(vector<int>& values) {
     int n = values.size();
-    vector <long long> ahead(2,0);
+    long long aheadBuy, aheadNotBuy, curBuy, curNotBuy ;
+    aheadBuy = aheadNotBuy =  curBuy = curNotBuy  = 0;
     for(int i = n-1; i >=0; i--){
-        for(int buy = 1; buy >=0; buy--){
-            if(buy){
-                ahead[buy] = max(-values[i] + ahead[!buy],ahead[buy]);
-            }
-            else{
-                ahead[buy] = max(values[i] + ahead[!buy], ahead[buy]);
-            }
-        }
+        curBuy = max(-values[i] + aheadNotBuy,aheadBuy);
+        curNotBuy = max(values[i] + aheadBuy, aheadNotBuy);
+        aheadBuy = curBuy;
+        aheadNotBuy = curNotBuy;
     }
-    return ahead[1];
+    return aheadBuy;
     }
 };
