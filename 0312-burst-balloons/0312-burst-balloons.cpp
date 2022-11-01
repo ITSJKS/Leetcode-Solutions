@@ -11,10 +11,20 @@ public:
 }
     int maxCoins(vector<int>& a) {
     int n = a.size();
-    vector <vector <int>> dp(n+2,vector <int>(n+2,-1));
+    vector <vector <int>> dp(n+2,vector <int>(n+2,0));
     a.insert(a.begin(),1);
     a.push_back(1);
-	return f(1,n,a,dp);
+    for(int i = n; i >=1; i--){
+        for(int j  =  1; j <=n; j++){
+            if(i > j) continue;
+int maxi= 0;
+for(int k = i; k<=j; k++){
+   maxi  = max(maxi,a[i-1]*a[k]*a[j+1] + dp[i][k-1] + dp[k+1][j]);
+}
+dp[i][j] = maxi;
+        }
+    }
+	return dp[1][n];
     }
     
 };
