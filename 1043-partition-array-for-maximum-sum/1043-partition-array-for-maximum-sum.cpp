@@ -15,6 +15,17 @@ public:
     int maxSumAfterPartitioning(vector<int>& arr, int k) {
         int n = arr.size();
     vector <int> dp(n+1,-1);
-        return f(0,k,arr,dp);
+    dp[n] = 0;
+    for(int i = n-1; i >=0; i--){
+        int len = 0, maxi = INT_MIN;
+        int ans = INT_MIN;
+        for(int idx = i; idx < min((int)arr.size(),i+k); idx++){
+            len++;
+            maxi = max(maxi,arr[idx]);
+            ans = max(ans,len*maxi + dp[idx+1]);
+        }
+        dp[i] = ans;
+    }
+        return dp[0];
     }
 };
