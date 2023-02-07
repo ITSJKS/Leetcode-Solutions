@@ -1,42 +1,14 @@
-const int MAXN = 100005;
-int n;
-unordered_map <int,int> tree[MAXN];
-
-void update(int idx, int val)
-{
-    while (idx <= n)
-    {
-        tree[idx][val] += 1;
-        idx += idx & -idx;
-    }
-}
-
-int query_1(int idx,int val)
-{
-    int sum = 0;
-    while (idx > 0)
-    {
-        sum += tree[idx][val];
-        idx -= idx & -idx;
-    }
-    return sum;
-}
 class RangeFreqQuery {
 public:
+    vector<int> mp[10001];
     RangeFreqQuery(vector<int>& arr) {
-        n = arr.size()+1;
-        for(int i = 0; i <n; i++){
-            tree[i].clear();
-        }
-        for(int i = 0; i <n-1; i++){
-            update(i+1,arr[i]);
+        for(int i = 0; i <arr.size(); i++){
+            mp[arr[i]].push_back(i);
         }
     }
     
     int query(int left, int right, int value) {
-        left++;
-        right++;
-        return query_1(right,value) - query_1(left-1,value);
+        return -(lower_bound(mp[value].begin(),mp[value].end(),left) - upper_bound(mp[value].begin(),mp[value].end(),right));
     }
 };
 
