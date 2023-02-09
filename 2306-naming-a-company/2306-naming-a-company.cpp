@@ -2,22 +2,22 @@ class Solution {
 public:
     long long distinctNames(vector<string>& ideas) {
         unordered_set <string> st[26];
-        long long count = 0;
+        int cnt[26][26] = {0};
         for(auto x:ideas){
-            st[x[0]-'a'].insert(x.substr(1));
+            string s = x.substr(1);
+            st[x[0]-'a'].insert(s);
         }
         for(int i = 0; i <26; i++){
-            if(st[i].size() == 0) continue;
-            for(int j = i+1; j <26; j++){
-                if(st[j].size() == 0) continue;
-                long long cnt1 = 0, cnt2 = 0;
-                for(auto x:st[i]){
-                    if(st[j].count(x) == 0) cnt1++;
+            for(auto x:st[i]){
+                for(int j = 0; j <26; j++){
+                    cnt[i][j] += st[j].count(x)==0;
                 }
-                for(auto x:st[j]){
-                    if(st[i].count(x) == 0) cnt2++;
-                }
-                count += cnt1*cnt2*2;
+            }
+        }
+        long long  count  = 0;
+        for(int i = 0; i <26; i++){
+            for(int j = 0; j <26; j++){
+                count += cnt[i][j]*1ll*cnt[j][i];
             }
         }
         return count;
