@@ -1,27 +1,24 @@
 class Solution {
-    typedef pair <int,int> pii;
-    long mod = 1e9 +7;
 public:
-    int maxPerformance(int n, vector<int>& speed, vector<int>& eff, int k) {
-        vector <pii> p;
+    int mod = 1e9 + 7;
+    int maxPerformance(int n, vector<int>& nums1, vector<int>& nums2, int k) {
+         vector <pair <int,int>> v;
         for(int i = 0; i <n; i++){
-            p.push_back({eff[i],speed[i]});
+            v.push_back({nums2[i],nums1[i]});
         }
-        sort(p.rbegin(),p.rend());
-        priority_queue <int,vector <int>,greater <int>> pq;
-        long  speed_ = 0;
-        long res = 0;
-        for(auto x:p){
-            int e = x.first;
-            int s = x.second;
-            speed_ += s;
-            pq.push(s);
-            if(pq.size()>k){
-                speed_ -= pq.top();
+        sort(v.rbegin(),v.rend());
+        priority_queue <int,vector <int>, greater<int>> pq;
+        long long ans = 0;
+        long long sum = 0;
+        for(int i = 0; i <n; i++){
+            pq.push(v[i].second);
+            sum += v[i].second;
+            if(pq.size() > k){
+                sum -= pq.top();
                 pq.pop();
             }
-            res = max(res,e*speed_);
+            ans = max(ans,sum*v[i].first);
         }
-        return res%mod;
+        return ans%mod;
     }
 };
