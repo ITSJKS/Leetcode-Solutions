@@ -6,16 +6,14 @@ public:
         for(int i = 31; i>=0; i--){
             unordered_set <int> prefix_set;
             mask = mask | (1<<i);
-            for(auto x:nums){
-                prefix_set.insert(x&mask);
-            }
             int temp = result | (1<<i);
-            for(auto prefix:prefix_set){
-                if(prefix_set.count(temp^prefix)){
+            for(auto x:nums){
+                if(prefix_set.count(x&(mask)^temp)){
                     result = temp;
                     break;
                 }
-            }
+                prefix_set.insert(x&mask);
+            } 
         }
         return result;
     }
