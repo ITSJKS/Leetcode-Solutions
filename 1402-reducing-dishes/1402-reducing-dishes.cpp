@@ -9,10 +9,18 @@ public:
         int not_take = solve(idx+1,count,s,n,dp);
         return dp[idx][count] = max(take,not_take);
     }
-    int maxSatisfaction(vector<int>& satisfaction) {
-        int n = satisfaction.size();
-        sort(satisfaction.begin(),satisfaction.end());
-        vector <vector<int>> dp(n+1,vector <int>(n+1,-1));
-        return solve(0,1,satisfaction,n,dp);
+    int maxSatisfaction(vector<int>& s) {
+        int n = s.size();
+        sort(s.begin(),s.end());
+        vector <vector<int>> dp(n+1,vector <int>(n+2,0));
+        for(int idx = n-1; idx >=0; idx--){
+            for(int count = 1; count <=n; count++){
+                int take = 0;
+                take = max(take,s[idx]*count + dp[idx+1][count+1]);
+                int not_take = dp[idx+1][count];
+                dp[idx][count] = max(take,not_take);
+            }
+        }
+        return dp[0][1];
     }
 };
