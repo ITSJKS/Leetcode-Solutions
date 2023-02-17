@@ -11,17 +11,27 @@
  */
 class Solution {
 public:
-    int cnt = 0;
-    void dfs(TreeNode* root){
-        if(root == nullptr){
-            return;
-        }
-        cnt++;
-        dfs(root->left);
-        dfs(root->right);
-    }
     int countNodes(TreeNode* root) {
-        dfs(root);
-        return cnt;
+        if(root == nullptr) return 0;
+        int lh = find_lheight(root);
+        int rh = find_rheight(root);
+        if(lh == rh) return (1<<lh) -1;
+        return 1 + countNodes(root->left) + countNodes(root->right);
+    }
+    int find_lheight(TreeNode* root){
+        int h = 0;
+        while(root){
+            h++;
+            root = root->left;
+        }
+        return h;
+    }
+    int find_rheight(TreeNode* root){
+        int h = 0;
+        while(root){
+            h++;
+            root = root->right;
+        }
+        return h;
     }
 };
