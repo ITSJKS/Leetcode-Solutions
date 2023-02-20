@@ -24,7 +24,7 @@ public:
             return maxi <=mid;
             
         };
-        int l = 0, r = 1e9+1;
+        int l = 0, r = stones.back()+1;
         while(r-l>1){
             int mid = l + (r-l)/2;
             if(check(mid)) r = mid;
