@@ -11,14 +11,10 @@ public:
 class Solution {
 public:
     unordered_map <int,Employee*> mp;
-    unordered_map <int,bool> vis;
     void dfs(int id, int &count){
-        vis[id] = true;
         count += mp[id]->importance;
         for(auto x:mp[id]->subordinates){
-            if(vis.count(x)==0){
                 dfs(x,count);
-            }
         }
         
     }
