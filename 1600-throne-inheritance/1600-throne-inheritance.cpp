@@ -1,6 +1,6 @@
 class ThroneInheritance {
 public:
-    set <string> dead;
+    unordered_set <string> dead;
     unordered_map <string,vector<string>> tree;
     string king;
     ThroneInheritance(string kingName) {
@@ -17,13 +17,13 @@ public:
     
     vector<string> getInheritanceOrder() {
         vector <string> inheritance;
-        dfs(tree,inheritance,king,dead);
+        dfs(inheritance,king);
         return inheritance;
     }
-    void dfs(unordered_map <string,vector <string>>&tree,vector <string> &inheritance,string key,set<string> &dead){
+    void dfs(vector <string> &inheritance,string key){
     if(dead.count(key)==0) inheritance.push_back(key);
     for(auto nbr:tree[key]){
-        dfs(tree,inheritance,nbr,dead);
+        dfs(inheritance,nbr);
     }
 }
 };
