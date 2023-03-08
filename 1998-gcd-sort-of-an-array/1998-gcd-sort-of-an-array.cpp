@@ -102,10 +102,10 @@ public:
             }
         }
     }
-    vector <int> prime_factors(int n){
-        vector <int> ans;
+    unordered_set <int> prime_factors(int n){
+        unordered_set <int> ans;
         while(n>1){
-            ans.push_back(spf[n]);
+            ans.insert(spf[n]);
             n/=spf[n];
         }
         return ans;
