@@ -10,19 +10,22 @@
  */
 class Solution {
 public:
-    // first approach , keep every node in a list in a vector , and take random numbers using the size and generate a random number
-    vector <int> v;
+    ListNode* mhead;
     Solution(ListNode* head) {
-        while(head!=nullptr){
-            v.push_back(head->val);
-            head = head->next;
-        }
+        mhead = head;
     }
     
     int getRandom() {
-        int size = v.size();
-        int random = rand()%size;
-        return v[random];
+        ListNode* curr = mhead;
+        int scope = 1, ans = 0;
+        while(curr!=nullptr){
+            if(rand()%scope == 0){
+                ans = curr->val;
+            }
+            curr= curr->next;
+            scope++;
+        }
+        return ans;
     }
 };
 
