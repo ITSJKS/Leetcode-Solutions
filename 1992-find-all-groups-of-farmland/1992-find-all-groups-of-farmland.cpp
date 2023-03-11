@@ -2,8 +2,16 @@ class Solution {
 public:
     vector <int> dx = {-1,1,0,0};
     vector <int> dy = {0,0,1,-1};
-    vector <int> dfs(int i, int j, vector <vector <int>>&vis,vector <vector <int>>&land){
-        vector <int> temp1 = {i,j};
+    void dfs(int i, int j, vector <vector <int>>&vis,vector <vector <int>>&land,vector<int>&ans1){
+        int x = ans1[0] , y = ans1[1];
+        if(i>x){
+            ans1 = {i,j};
+        }
+        else if(i == x){
+            if(j>=y){
+                ans1 = {i,j};
+            }
+        }
         vis[i][j] = 1;
         int n = land.size();
         int m  = land[0].size();
@@ -11,12 +19,9 @@ public:
             int x = i + dx[k];
             int y = j + dy[k];
             if(x>=0 && x < n && y >= 0 && y < m && vis[x][y] == 0 && land[x][y] == 1){
-                vector <int> temp2 = dfs(x,y,vis,land);
-                temp1[0] = max(temp1[0],temp2[0]);
-                temp1[1] = max(temp1[1],temp2[1]);  
+                dfs(x,y,vis,land,ans1);
             }
         }
-        return temp1;
         
     }
     vector<vector<int>> findFarmland(vector<vector<int>>& land) {
@@ -27,7 +32,8 @@ public:
         for(int i = 0; i <n; i++){
             for(int j = 0; j <m; j++){
                 if(!vis[i][j]&&land[i][j] == 1){
-                    vector <int> ans1 = dfs(i,j,vis,land);
+                    vector <int> ans1 = {i,j};
+                    dfs(i,j,vis,land,ans1);
                     ans.push_back({i,j,ans1[0],ans1[1]});
                 }
             }
