@@ -13,6 +13,7 @@ public:
     void renew(string tokenId, int currentTime) {
         if(mp.count(tokenId)){
             if(mp[tokenId]+life_time<=currentTime){
+                mp.erase(tokenId);
             }
             else mp[tokenId] = currentTime;
         }
@@ -20,11 +21,14 @@ public:
     
     int countUnexpiredTokens(int currentTime) {
         int count = 0;
+        vector <string> c;
         for(auto x:mp){
             if(x.second+life_time>currentTime){
                 count++;
             }
+            else c.push_back(x.first);
         }
+        for(auto x:c) mp.erase(x);
         return count;
     }
 };
