@@ -1,7 +1,7 @@
 class UndergroundSystem {
 public:
-    map <string,map <string,pair<int,int>>> cost_map;
-    map <int,pair <string,int>> mp;
+    unordered_map <string ,pair<int,int>> cost_map;
+    unordered_map <int,pair <string,int>> mp;
     UndergroundSystem() {
         
     }
@@ -14,15 +14,17 @@ public:
         if(mp.count(id)){
             string startS = mp[id].first;
             int startT = mp[id].second;
-            cost_map[startS][stationName].first += (t-startT);
-            cost_map[startS][stationName].second++;
+            string hash = startS +">"+stationName;
+            cost_map[hash].first += (t-startT);
+            cost_map[hash].second++;
             mp.erase(id);
         }
     }
     
     double getAverageTime(string startStation, string endStation) {
-        int total_time = cost_map[startStation][endStation].first;
-        int count = cost_map[startStation][endStation].second;
+        string hash = startStation + ">" + endStation;
+        int total_time = cost_map[hash].first;
+        int count = cost_map[hash].second;
         return (double)total_time/(double)count;
     }
 };
