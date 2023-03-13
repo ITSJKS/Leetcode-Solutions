@@ -8,7 +8,7 @@ public:
     int mod = 1e9 + 7;
     int countNicePairs(vector<int>& nums) {
         long long  count = 0;
-        map <int,int> mp;
+        unordered_map <int,int> mp;
         for(auto x:nums){
             int y = rev(x);
             count = (count + mp[x-y])%mod;
