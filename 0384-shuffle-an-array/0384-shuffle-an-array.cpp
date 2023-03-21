@@ -19,10 +19,12 @@ class Solution
     {
 
         int n = v.size();
-        for (int i = 0; i < n; i++)
+        int size = n;
+        for (int i = n-1; i >=0; i--)
         {
-            int x = random() % n;
+            int x = random() % size;
             swap(v[i], v[x]);
+            size--;
         }
         return v;
     }
