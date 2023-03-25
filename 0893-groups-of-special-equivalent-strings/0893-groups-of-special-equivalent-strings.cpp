@@ -1,7 +1,7 @@
 class Solution {
 public:
     int numSpecialEquivGroups(vector<string>& words) {
-        unordered_map <string,int> mp;
+        unordered_set <string> st;
         for(auto x:words){
             int n = x.size();
             string s;
@@ -12,8 +12,8 @@ public:
             }
             sort(s.begin(),s.end());
             sort(t.begin(),t.end());
-            mp[s+t]++;
+            st.insert(s+t);
         }
-        return mp.size();
+        return st.size();
     }
 };
