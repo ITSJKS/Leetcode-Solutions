@@ -1,27 +1,28 @@
-int sum_and(const vector<int>& r1, const std::vector<int>& r2) {
-        int ans = 0;
-        for (int i = 0; i < r1.size(); i++) {
-            ans += r1[i] && r2[i];
-        }
-        return ans;
-    }
 class Solution {
 public:
-    vector<int> goodSubsetofBinaryMatrix(std::vector<std::vector<int>>& grid) {
-        int n = grid.size();    
-        if(n == 1){
-            if(accumulate(grid[0].begin(),grid[0].end(),0ll) == 0) return {0};
-            return {};
+    vector<int> goodSubsetofBinaryMatrix(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        map <int,int> mp;
+        for(int i = 0; i <n; i++){
+            int temp = 0;
+            for(int j = 0; j <m; j++){
+                if(grid[i][j]) temp |= (1<<j);
+            }
+            if(mp.count(temp) ==0) mp[temp] = i;
+            if(temp == 0) return {i};
         }
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                if (sum_and(grid[i], grid[j]) == 0) {
-                    return vector <int>{i, j};
+        for(int i = 0; i <(1<<m); i++){
+            if(mp.count(i) == 0) continue;
+            for(int j = i+1; j < (1<<m); j++){
+                if((i&j) == 0 && (mp.count(i) && mp.count(j))){
+                    int a = mp[i];
+                    int b = mp[j];
+                    if(a > b) swap(a,b);
+                    return {a,b};
                 }
             }
         }
-        return vector <int>{};
+        return {};
     }
-    
-
 };
