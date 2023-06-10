@@ -3,7 +3,7 @@ public:
     vector<int> goodSubsetofBinaryMatrix(vector<vector<int>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
-        map <int,int> mp;
+        unordered_map <int,int> mp;
         for(int i = 0; i <n; i++){
             int temp = 0;
             for(int j = 0; j <m; j++){
