@@ -54,29 +54,16 @@ template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto 
 
 class Solution {
 public:
-    vector <int> monoDec(vector <int>& nums) {
-        int n = nums.size();
-        stack <int> st;
-        vector <int> m_stack;
-        for (int i = n - 1; i >= 0; i--) {
-            while (!st.empty() && nums[st.top()] >= nums[i]) st.pop();
-            if (st.empty()) m_stack.push_back(n);
-            else m_stack.push_back(st.top());
-            st.push(i);
-        }
-        reverse(all(m_stack));
-        return m_stack;
-    }
     int validSubarrays(vector<int>& nums) {
-        vector <int> m_stack = monoDec(nums);
+        vector <int> m_stack;
         int count = 0;
-        int n = nums.size();
-        for (int i = 0; i < n; i++) {
-            int cnt = m_stack[i] - 1;
-            count += (cnt-i+1);
+        for(auto &x:nums) {
+            while(m_stack.size() && m_stack.back() > x){
+                m_stack.pop_back();
+            }
+            m_stack.push_back(x);
+            count += m_stack.size();
         }
-        debug(count);
-        debug(m_stack);
         return count;
     }
 };
