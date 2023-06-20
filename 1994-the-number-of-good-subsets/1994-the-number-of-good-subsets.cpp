@@ -65,17 +65,15 @@ public:
         return res;
     }
     // Did we really needed dp or my subset brute force could have passed
-    int dp[20][(1<<11)];
     int solve(int ind, vector <int> &v, int mask,vector <int> &freq){
         if(ind == v.size()) return mask > 0;
-        if(dp[ind][mask]==-2) return dp[ind][mask];
         // skip it and keep mask same as always
         ll no_take = (solve(ind+1,v,mask,freq))%m;
         ll take = 0;
         if((mask&v[ind]) == 0){
             take = ((solve(ind+1,v,mask|v[ind],freq)%m)*1ll*freq[v[ind]])%m;
         }
-        return dp[ind][mask] = (take+no_take)%m;
+        return (take+no_take)%m;
         //take the current element
         
     }
@@ -114,7 +112,6 @@ public:
         }
         // debug(v);
         // debug(freq);
-        memset(dp,-1,sizeof dp);
         int pow_one = modpow(2,ones);
         int res = solve(0,v,0,freq);
         ll val = ((pow_one)%m*1ll*(res)%m)%m;
