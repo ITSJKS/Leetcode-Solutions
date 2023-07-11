@@ -2,15 +2,14 @@ class Solution {
 public:
     int mod = 1e9 + 7;
     int numberOfWays(int n) {
-        int mid = n/2 + 1;
-        vector <int> dp(mid);
+        vector <int> dp(n+1);
         dp[0] = 1;
-        for(int i = 1; i <mid; i++){
-            for(int j = 0; j < i; j++){
-                dp[i] = (dp[i] + (long long)dp[j]*dp[i-j-1]%mod)%mod;
+        for(int i = 2; i <=n; i+=2){
+            for(int j = 0; j < i; j+=2){
+                dp[i] = (dp[i] + (long long)dp[j]*dp[i-j-2]%mod)%mod;
             }
         }
-        return dp[n/2];
+        return dp[n];
     }
 };
 // we can find the number of way for numsPeople by using dp
