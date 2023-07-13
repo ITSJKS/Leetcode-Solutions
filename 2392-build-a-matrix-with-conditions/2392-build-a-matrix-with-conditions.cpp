@@ -31,10 +31,13 @@ public:
         // for(auto &x:col) cout<<x<<" ";
         if(row.size()!= k || col.size()!=k) return {};
         vector <vector <int>>res(k,vector <int>(k,0));
-        for(int i = 0 ; i <k; i++){
-            for(int j = 0; j < k; j++){
-                if(col[j] == row[i]) res[i][j] = row[i];
-            }
+        vector <int> row_idx(k+1),col_idx(k+1);
+        for(int i = 0; i <k; i++){
+            row_idx[row[i]] = i;
+            col_idx[col[i]] = i;
+        }
+        for(int i = 0; i <k; i++){
+            res[row_idx[i+1]][col_idx[i+1]] = i+1;
         }
         // My final matrix row's should be in order of row
         return res;
