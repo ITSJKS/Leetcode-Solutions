@@ -1,6 +1,6 @@
 class DiningPhilosophers {
 public:
-    mutex m;
+    mutex mtx[5];
     DiningPhilosophers() {
         
     }
@@ -13,12 +13,24 @@ public:
                     function<void()> putRightFork) {
 		
         
-        m.lock();
-        pickLeftFork();
-        pickRightFork();
+        int left = philosopher;
+        int right = (philosopher+1)%5;
+        unique_lock <mutex> lck1(mtx[left],defer_lock);
+        unique_lock <mutex> lck2(mtx[right],defer_lock);
+        if(philosopher%2 == 0){
+            lck1.lock();
+            lck2.lock();
+            pickLeftFork();
+            pickRightFork();
+        }
+        else{
+            lck2.lock();
+            lck1.lock();
+            pickRightFork();
+            pickLeftFork();
+        }
         eat();
         putLeftFork();
         putRightFork();
-        m.unlock();
     }
 };
