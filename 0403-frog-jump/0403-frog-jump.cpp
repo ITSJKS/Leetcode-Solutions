@@ -1,7 +1,7 @@
 class Solution {
 public:
     int dp[2001][2001];
-    bool solve(int ind, int prev, vector <int>&stones,map <int,int>&mp){
+    bool solve(int ind, int prev, vector <int>&stones,unordered_map <int,int>&mp){
         if(ind == stones.size() - 1) return true;
         // previous k 
         if(dp[ind][prev]!=-1) return dp[ind][prev];
@@ -15,7 +15,7 @@ public:
     bool canCross(vector<int>& stones) {
         if(stones[1]!=1) return false;
         memset(dp,-1,sizeof dp);
-        map <int,int> mp;
+        unordered_map <int,int> mp;
         for(int i = 0; i <stones.size(); i++){
             mp[stones[i]] = i;
         }
