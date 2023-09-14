@@ -9,6 +9,7 @@ public:
             int cnt = __builtin_popcount(x);
             c += (2*cnt >=k);
             for(int j = k; j<=60; j++){
+                if(mp.count(j-cnt))
                 count += mp[j-cnt];
             }
             mp[cnt]++;
