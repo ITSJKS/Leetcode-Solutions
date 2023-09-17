@@ -1,10 +1,11 @@
 class Solution {
 public:
+    unordered_map<int, vector<int>> coprimes;
     void dfs(int src, int par, vector <vector <int>>&g, map <int,vector <pair<int,int>>>&mp, vector <int> &ans,vector <int>&nums,int level){
         int val = nums[src];
         int cur = -1;
         int lvl_ = -1;
-        for(int j = 1; j <=50; j++){
+        for(auto &j:coprimes[val]){
             if(gcd(j,val) == 1){
                 if(mp[j].size()){
                     int v = mp[j].back().first;
@@ -28,6 +29,11 @@ public:
             int u = edge[0] , v= edge[1];
             g[u].push_back(v);
             g[v].push_back(u);
+        }
+        for(int i = 1; i <=50; i++){
+            for(int j = 1; j <=50; j++){
+                if(gcd(i,j) == 1) coprimes[i].push_back(j);
+            }
         }
         map <int,vector <pair<int,int>>> mp;
         vector <int> ans(n);
