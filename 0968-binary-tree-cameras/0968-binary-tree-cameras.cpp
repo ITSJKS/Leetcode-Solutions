@@ -11,48 +11,22 @@
  */
 class Solution {
 public:
-    map <pair<TreeNode*,int>,int> mp;
-    int func(TreeNode* node, int opt) {
-        if(node == nullptr) return 0;
-        if(mp.count({node,opt})) return mp[{node,opt}];
-        
-        if(opt == 1)
-            return mp[{node, opt}] = 1 + func(node->left, 2) + func(node->right, 2);
-        
-        if(opt == 2)
-        {
-            int cam = 1 + func(node->left, 2) + func(node->right, 2);
-            int nocam = func(node->left, 3) + func(node->right, 3);
-            return mp[{node, opt}] = min(cam, nocam);
+    int count = 0;
+    int solve(TreeNode*root){
+        if(root == nullptr) return 0;
+        int left = solve(root->left);
+        int right = solve(root->right);
+        if(left ==  -1 || right ==  -1){
+            count++;
+            return 1;
         }
-        
-        else
-        {
-            int cam = 1 + func(node->left, 2) + func(node->right, 2);
-            int leftcam = INT_MAX, rightcam = INT_MAX;
-            
-            if(node->left)
-                leftcam = func(node->left, 1) + func(node->right, 3);
-            
-            if(node->right)
-                rightcam = func(node->left, 3) + func(node->right, 1);
-            
-            
-            return mp[{node, opt}] = min(min(cam, leftcam), rightcam);
+        if(left == 1 || right == 1){
+            return 0;
         }
-        
+        return -1;
     }
     int minCameraCover(TreeNode* root) {
-        if(root == nullptr) return 0;
-        return func(root,3);
+        if(solve(root) == -1) count++;
+        return count;
     }
 };
-
-/*
-It is kind of similar to the problem I saw few days ago
-we can apply dp here
-when for a node , we keep a camera , we will 
-
-
-
-*/
