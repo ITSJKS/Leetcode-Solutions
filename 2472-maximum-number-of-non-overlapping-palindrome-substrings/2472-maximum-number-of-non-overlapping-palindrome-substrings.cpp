@@ -1,13 +1,11 @@
 class Solution {
 public:
-    bool check(string &s,int i, int j){
-        if(j >= s.size()) return false;
-        while(i<j){
-            if(s[i]!=s[j]) return false;
-            i++;
-            j--;
-        }
-        return true;
+    int memo[2001][2001];
+    bool check(string &s, int i, int j){
+        if(i > j) return true;
+        if(memo[i][j]!=-1) return memo[i][j];
+        if(s[i]!=s[j])   return  memo[i][j]  = false;
+        return memo[i][j] = check(s,i+1,j-1);
     }
     int dp[2001];
     int solve(int ind, string &s, int k){
@@ -22,6 +20,7 @@ public:
     }
     int maxPalindromes(string s, int k) {
         int n = s.size();
+        memset(memo,-1,sizeof(memo));
         memset(dp,-1,sizeof dp);
         check(s,0,n-1);
         return solve(0,s,k);
