@@ -5,7 +5,8 @@ public:
         int n = text.size();
         int count  = 0;
         for(int i = 0; i <n; i++){
-            left = left + text[i], right = text[n-1-i] + right;
+            left += text[i];
+            right.insert(right.begin(),text[n-1-i]);
             if(left == right) count++,left = "",right = "";
         }
         return count;
