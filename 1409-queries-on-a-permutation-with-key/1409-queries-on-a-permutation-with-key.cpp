@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<int> processQueries(vector<int>& queries, int m) {
         vector <int> perm;
-        for(int i =1; i<=m; i++){
+        for(int i =m; i>=1; i--){
             perm.push_back(i);
         }
         int q = queries.size();
@@ -17,8 +17,8 @@ public:
                 }
             }
             perm.erase(perm.begin()+idx);
-            perm.insert(perm.begin(),num);
-            ans.push_back(idx);
+            perm.push_back(num);
+            ans.push_back(m-idx-1);
         }
         return ans;
     }
