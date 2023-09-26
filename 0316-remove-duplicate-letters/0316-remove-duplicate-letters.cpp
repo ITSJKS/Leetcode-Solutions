@@ -3,19 +3,19 @@ public:
     string removeDuplicateLetters(string s) {
         int n = s.size();
         string ans = "";
-        unordered_map <char,int> mp;
-        for(auto &x:s) mp[x]++;
-        unordered_map <char,int> vis;
+        vector <int> mp(26,0);
+        for(auto &x:s) mp[x-'a']++;
+        vector <bool> vis(26,0);
         for(int i = 0; i <n; i++){
             char ch = s[i];
-            mp[ch]--;
-            if(vis[ch]) continue;
-            while(ans.size() && ans.back() > ch && mp[ans.back()]){
-                vis[ans.back()] = false;
+            mp[ch-'a']--;
+            if(vis[ch-'a']) continue;
+            while(ans.size() && ans.back() > ch && mp[ans.back()-'a']){
+                vis[ans.back()-'a'] = false;
                 ans.pop_back();
             }
             ans.push_back(ch);
-            vis[ch] = 1;
+            vis[ch-'a'] = 1;
         }
         return ans;
         
