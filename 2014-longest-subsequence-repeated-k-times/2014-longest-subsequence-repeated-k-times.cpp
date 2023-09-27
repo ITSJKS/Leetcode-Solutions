@@ -27,6 +27,11 @@ public:
         while(!q.empty()){
             string cur = q.front();
             q.pop();
+            vector <int> cnt(26,0);
+            for(auto &x:cur){
+                cnt[x-'a']++;
+                if(cnt[x-'a']*k > freq[x-'a']) continue;
+            }
             for(int j = 0; j <26; j++){
                 if(st.count(j+'a') == 0) continue;
                 string temp = cur + char(j+'a');
