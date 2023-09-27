@@ -1,6 +1,12 @@
 class Solution {
 public:
     string longestSubsequenceRepeatedK(string s, int k) {
+        unordered_set <char> st;
+        vector  <int> freq(26,0);
+        for(auto &x:s){
+            freq[x-'a']++;
+        }
+        for(char ch = 'a'; ch<='z'; ch++) if(freq[ch-'a']>=k) st.insert(ch);
         int n = s.size();
         queue <string> q;
         q.push("");
@@ -22,6 +28,7 @@ public:
             string cur = q.front();
             q.pop();
             for(int j = 0; j <26; j++){
+                if(st.count(j+'a') == 0) continue;
                 string temp = cur + char(j+'a');
                 if(check(temp)){
                     ans = temp;
