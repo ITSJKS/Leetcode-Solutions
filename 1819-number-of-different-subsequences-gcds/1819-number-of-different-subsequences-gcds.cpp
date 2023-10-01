@@ -2,7 +2,7 @@ class Solution {
 public:
     int countDifferentSubsequenceGCDs(vector<int>& nums) {
         int n = nums.size();
-        int maxi = 2*1e5 + 1;
+        int maxi = *max_element(nums.begin(),nums.end())+1;
         vector <int> factors(maxi,0);
         for(int i = 0; i <n; i++){
             for(int j = 1; j*j <= nums[i]; ++j){
