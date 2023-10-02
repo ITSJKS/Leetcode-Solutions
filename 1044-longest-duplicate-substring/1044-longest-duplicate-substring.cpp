@@ -14,7 +14,7 @@ public:
             hashes[i+1] = (hashes[i] + ((s[i]-'a'+1)*1ll*powers[i])%mod)%mod;
         }
         string ans="";
-        map <long long,vector <int>> mp;
+        unordered_map <long long,vector <int>> mp;
         auto check = [&](int len){
             if(len == 0) return true;
             for(int i = 0; i <=n-len; i++){
