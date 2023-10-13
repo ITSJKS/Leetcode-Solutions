@@ -1,23 +1,24 @@
 class Solution {
 public:
+    int k;
     int mod = 1e9 + 7;
-    int solve(int idx, string &s, int k,vector <int> &dp){
-        int n = s.size();
-        if(idx == n) return 1;
-        if(idx > n) return 0;
-        if(dp[idx] != -1) return dp[idx];
-        long long c = 0;
-        for(int len = 1; len < 10 && len + idx <= n; len++){
-            string t = s.substr(idx,len);
-            long long num = stoll(t);
-            if(num < 1 || num >k) break;
-            c = (c+solve(idx+len,s,k,dp))%mod;
+    int dp[100001];
+    int solve(int ind, string &s, int len){
+        if(ind == s.size()) return 1;
+        if(s[ind] == '0') return 0;
+        if(dp[ind]!=-1) return dp[ind];
+        int count = 0;
+        for(int j = 1; j <=len; j++){
+            if(ind +j  > s.size()) break;
+            string t = s.substr(ind,j);
+            if(stol(t) <= k) count = (count + solve(ind+j,s,len))%mod;
         }
-        return dp[idx] = c;
+        return dp[ind] = count;
     }
     int numberOfArrays(string s, int k) {
-        int n = s.size();
-        vector <int> dp(n+1,-1);
-        return solve(0,s,k,dp);
+        memset(dp,-1,sizeof dp);
+        this->k = k;
+        int len = to_string(k).size();
+        return solve(0,s,len);
     }
 };
