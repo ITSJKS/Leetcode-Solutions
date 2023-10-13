@@ -5,7 +5,7 @@ public:
         if(i == j) return true;
         if(dp[i][j]!=-1) return dp[i][j];
         bool ans = false;
-        if(j -i == 1){
+        if(j - i == 1){
             ans =  s[i] == s[j];
         }
         else if(s[i] == s[j] && solve(i+1,j-1,s)){
@@ -21,20 +21,27 @@ public:
     // 
     string longestPalindrome(string s) {
         int n = s.size();
-        dp.resize(n,vector <int>(n,-1));
+        dp.resize(n+1,vector <int>(n+1,0));
         int max_len = 0;
-        int idx = 0;
-        for(int i = 0; i <n; i++){
-            for(int j = i; j <n; j++){
-                if(solve(i,j,s)){
-                    if(j -i + 1  > max_len){
+        int start_idx = 0;
+        for(int i = n-1; i>=0; i--){
+            for(int j = i; j<n; j++){
+                int len = j - i + 1;
+                if(len == 1) dp[i][j] = 1;
+                else if(len == 2) dp[i][j] = s[i] == s[j];
+                else{
+                    dp[i][j] = (s[i] == s[j] ) && dp[i+1][j-1];
+                }
+                if(dp[i][j]){
+                    if(j- i + 1> max_len){
                         max_len = j - i + 1;
-                        idx = i;
+                        start_idx = i;
                     }
+                    
                 }
             }
         }
-        return s.substr(idx,max_len);
+        return s.substr(start_idx,max_len);
     }
     // Time complexity is O(n*n) as I am traversing each subarray and for these subarray I am checking if the current subarray is palindrome or not
     // I am using dynamic programming aproach to check if my current substring is palindrome
