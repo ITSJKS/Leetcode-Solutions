@@ -1,41 +1,18 @@
 class Solution {
 public:
-    int f(int i, int j, string &s, string &t,vector <vector <int>>&dp){
-        // BC
-        if(i == 0) return j;
-        if(j == 0) return i;
-        // match 
-        if(dp[i][j]!=-1) return dp[i][j];
-        if(s[i-1] == t[j-1]){
-            return dp[i][j] = f(i-1,j-1,s,t,dp);
-        }
-        else{
-            return dp[i][j] = min(1 + f(i,j-1,s,t,dp),min(1+ f(i-1,j,s,t,dp),1 + f(i-1,j-1,s,t,dp)));
-        }
-        return 0;
-        // notMatch
-    }
-    int minDistance(string s, string t) {
-        int n = s.size() , m = t.size();
-        // vector <vector <int>> dp(n+1,vector <int>(m+1,0));
-        vector <int> prev(m+1),cur(m+1);
-        for(int i = 0; i <=m; i++){
-            prev[i] = i;
-        }
-        for(int i = 1; i <=n; i++){
-            cur[0] = i;
-            for(int j = 1; j <=m; j++){
-                if(s[i-1] == t[j-1]){
-                    cur[j] = prev[j-1];
-        }
-                 else{
-                        cur[j] = min(1 + cur[j-1],min(1+ prev[j],1 + prev[j-1]));
-        }
-            }
-            prev = cur;
-        }
-        return prev[m];
+    int dp[501][501];
+    int solve(int ind1, int ind2, string &word1, string &word2){
+        if(ind1 < 0) return ind2 + 1;
+        if(ind2 < 0) return ind1 + 1;
+        if(dp[ind1][ind2]!=-1) return dp[ind1][ind2];
+        if(word1[ind1] == word2[ind2]) return dp[ind1][ind2] = solve(ind1-1,ind2-1,word1,word2);
+        else return dp[ind1][ind2] =  min({1 + solve(ind1-1,ind2-1,word1,word2),solve(ind1,ind2-1,word1,word2)+1,1+solve(ind1-1,ind2,word1,word2)});
         
-        // return f(n,m,s,t,dp);
+    }
+    int minDistance(string word1, string word2) {
+        int n = word1.size();
+        int m = word2.size();
+        memset(dp,-1,sizeof dp);
+        return solve(n-1,m-1,word1,word2);
     }
 };
