@@ -6,12 +6,13 @@ public:
         int ans = 0;
         stack <int> st;
         for(int i = n-1; i >=0; i--){
+            int cnt = 0;
             while(!st.empty() && nums[i] > nums[st.top()]){
-                dp[i] = max(dp[i]+1,dp[st.top()]); // dp[st.top()] needed to find if there is already a better answer;
-                ans = max(ans,dp[i]);
+                dp[i] = max(dp[i]+1,dp[st.top()]);
                 st.pop();
+                ans = max(ans,dp[i]);
             }
-          st.push(i);
+            st.push(i);
         }
         return ans;
     }
