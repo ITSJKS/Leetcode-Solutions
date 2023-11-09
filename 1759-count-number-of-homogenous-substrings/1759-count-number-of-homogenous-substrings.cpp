@@ -4,7 +4,6 @@ public:
         int n = s.size();
         int mod = 1e9 + 7;
         long long count = n;
-        int prev = s[0];
         int cnt = 0;
         for(int i = 1; i <n; i++){
             if(s[i]==s[i-1]){
