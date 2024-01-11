@@ -25,4 +25,12 @@ public:
     }
 };
 
-// for finding 
+// v[i][sum] = v[i+1][sum] + v[i+1][sum - a] + v[i+1][sum - 2*a] + v[i+1][sum - 3*a] + .... v[i+1][sum - k*a]
+
+// v[i][sum+a] = v[i+1][sum+a]  + v[i+1][sum] + v[i+1][sum-a]  + v[i+1][sum -(k-1)*a]
+
+// v[i][sum+a] = v[i+1][sum+a] + v[i][sum] - v[i+1][sum - k*a]
+// let sum + a == x
+// v[i][x] = v[i+1][x]+ v[i][x-a] - v[i+1][sum - k*a]
+
+// that will be our recurrence for this problem
