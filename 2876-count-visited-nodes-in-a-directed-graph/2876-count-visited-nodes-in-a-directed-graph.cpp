@@ -1,5 +1,9 @@
 class Solution {
 public:
+    int dfs(int src, int cur, vector <int> &ans, vector <int>&edges){
+        if(ans[src]) return ans[src];
+        return ans[src] = dfs(edges[src],1,ans,edges) + cur;
+    }
     vector<int> countVisitedNodes(vector<int>& edges) {
         int n = edges.size();
         vector <int> indegree(n);
@@ -38,9 +42,9 @@ public:
                 }
             }
         }
-        while(!st.empty()){
-            ans[st.top()] = ans[edges[st.top()]] + 1;
-            st.pop();
+        for(int i = 0; i <n; i++){
+            if(ans[i] == 0)
+            dfs(i,1,ans,edges);
         }
         return ans;
     }
