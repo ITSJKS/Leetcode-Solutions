@@ -18,9 +18,9 @@ public:
             pq.pop();
             for(auto &nbr:g[node]){
                 int nd = d + time;
-                int turn = (d+change-1)/change;
-                if ((d / change) % 2 == 1){
-                    nd += change - (d % change);
+                int turn = (d+change)/change;
+                if(turn%2 == 0){
+                    nd = turn*change + time;
                 }
                 if(dist1[nbr] > nd){
                     dist2[nbr] = dist1[nbr];
