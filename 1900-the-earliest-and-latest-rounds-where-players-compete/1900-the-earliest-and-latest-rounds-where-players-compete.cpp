@@ -2,7 +2,7 @@ class Solution {
 public:
     unordered_set <string> vis;
     void solve(string s,int depth,int &mini, int &maxi){
-        if(depth>=100) return;
+        if(depth>=10) return;
         int n = s.size();
         for(int i = 0; i <n/2; i++){
             if(s[i] == '1' && s[n-i-1] == '1'){
