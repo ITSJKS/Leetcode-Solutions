@@ -1,6 +1,6 @@
 class Solution {
 public:
-    double dp[8][25][10][10];
+    double dp[8][25][9][9];
     double fact(int num){
         double fact = 1;
         for(int i = 1; i<=num; i++){
