@@ -1,20 +1,25 @@
 class Solution {
 public:
-    int shortestSubarray(vector<int>& num, int k) {
-        vector <long long> nums(num.begin(),num.end());
-        long long n = nums.size();
-        deque <int> d;
-        int res = n + 1;
-        for(int i = 0; i <n; i++){
-            if(i > 0){
-                nums[i]+=nums[i-1];
+    int shortestSubarray(vector<int>& nums, int k) {
+        deque <long long> dq;
+        // sum of the subarray will be greater than k if
+        // prefix[r] - prefix[l-1] >= k  , ans = r-l+1
+        int n = nums.size();
+        long long cur = 0;
+        long long ans = 1e9;
+        dq.push_back(0ll);
+        vector <long long> prefix(n+1,0);
+        for(int r = 1; r<=n; r++){
+            cur += nums[r-1];
+            while(dq.size() && (cur - prefix[dq.front()]) >= k){
+                ans  = min(ans,r-dq.front());
+                dq.pop_front();
             }
-            if(nums[i]>=k) res = min(res,i+1);
-            while(d.size()>0 && nums[i]-nums[d.front()]>=k) 
-                res = min((int)res,(int)i-d.front()),d.pop_front();
-            while(d.size()>0 && nums[i]<nums[d.back()]) d.pop_back();
-            d.push_back(i);
+            while(dq.size() && cur < prefix[dq.back()]) dq.pop_back();
+            prefix[r] = cur;
+            dq.push_back(r);
         }
-        return res<=n?res:-1;
+        if(ans == 1e9) return -1;
+        return ans;
     }
 };
