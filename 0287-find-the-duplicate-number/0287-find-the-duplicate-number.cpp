@@ -23,4 +23,6 @@ approach 1
 we can use a map to count occurence of each element and in the end just return the element with occurence >=2 
 approach 2
 binary search on answer
+approach 3
+
 */
